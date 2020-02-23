@@ -50,16 +50,6 @@
 
   </dependencyManagement>
   <dependencies>
-    <!--加入nocas-client-->
-    <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
-    </dependency>
-    <!-- 引入 feign-client -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-openfeign</artifactId>
-    </dependency>
     <!-- 整合springmvc web访问层 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -138,11 +128,6 @@
       <groupId>com.github.pagehelper</groupId>
       <artifactId>pagehelper-spring-boot-starter</artifactId>
       <version>1.2.5</version>
-    </dependency>
-    <!-- actuator 监控中心 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
     <!-- Spring Boot Dubbo 依赖 -->
     <dependency>

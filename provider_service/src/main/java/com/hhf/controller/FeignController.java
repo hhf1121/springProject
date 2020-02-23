@@ -17,6 +17,7 @@ public class FeignController implements providerApi {
 
     @RequestMapping("/getDataByFeign/{yes}")
     public Map<String, Object> getDataByFeign(Integer yes) {
+        System.out.println("------getDataByFeign--------");
         return dubboService.getRPCData(yes);
     }
 }
