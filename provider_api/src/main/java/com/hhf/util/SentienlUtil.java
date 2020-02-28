@@ -23,6 +23,15 @@ public class SentienlUtil implements FallbackFactory<providerApi> {
                 map.put("data","sentinel降级、限流.");
                 return map;
             }
+
+            @Override
+            public Map<String, Object> updateCount(Long id) {
+                log.error("原因:{}",throwable);
+                Map<String,Object> map=new HashMap<>();
+                map.put("success",false);
+                map.put("data","sentinel降级、限流.");
+                return map;
+            }
         };
     }
 }

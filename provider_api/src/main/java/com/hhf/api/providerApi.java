@@ -4,6 +4,7 @@ import com.hhf.util.SentienlUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -15,6 +16,9 @@ public interface providerApi {
 
     @RequestMapping("/getDataByFeign/{yes}")
     public Map<String,Object> getDataByFeign(@PathVariable("yes") Integer yes);
+
+    @RequestMapping("/book/updateCount")
+    public Map<String,Object> updateCount(@RequestParam("id") Long id);
 
 }
 

@@ -1,4 +1,4 @@
-package com.hhf.service;
+package com.hhf.service.impl;
 
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;

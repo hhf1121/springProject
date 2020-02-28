@@ -1,4 +1,4 @@
-package com.hhf.service;
+package com.hhf.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.hhf.api.IDubboService;

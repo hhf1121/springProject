@@ -1,9 +1,7 @@
 package com.hhf.controller;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.hhf.api.IDubboService;
-import com.hhf.service.SentinelService;
-import com.hhf.utils.SentienlUtil;
+import com.hhf.service.impl.SentinelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
