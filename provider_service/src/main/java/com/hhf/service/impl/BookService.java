@@ -9,6 +9,7 @@ import com.hhf.service.MySPI;
 import com.hhf.utils.ResultUtils;
 import com.sun.corba.se.spi.activation.Server;
 import io.seata.spring.annotation.GlobalTransactional;
+import jdk.nashorn.internal.codegen.ObjectCreator;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,15 @@ public class BookService implements InitializingBean {
         //3.制造异常
 //        int j=1/0;
         return ResultUtils.getSuccessResult("成功");
+    }
+
+
+    public Map<String, Object> getBookInfoById(Long id){
+        System.out.println("入参："+id);
+        QueryWrapper<Book> wrapper=new QueryWrapper<>();
+        wrapper.eq("id",id);
+        Book b=bookMapper.selectById(id);
+        return ResultUtils.getSuccessResult(b);
     }
 
     @Override

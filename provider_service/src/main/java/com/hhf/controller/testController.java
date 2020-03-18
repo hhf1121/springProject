@@ -2,7 +2,12 @@ package com.hhf.controller;
 
 import com.hhf.api.IDubboService;
 //import com.hhf.feignApi.FeignClientApi;
+import com.hhf.entity.User;
+import com.hhf.feignApi.HttpClientApi;
+import com.hhf.feignApi.SpringBootApi;
+import com.hhf.service.impl.BookService;
 import com.hhf.service.impl.SentinelService;
+import com.hhf.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,13 +56,32 @@ public class testController {
 	}
 
 
-	//feign调用http
-//	@Autowired
-//	private FeignClientApi feign;
+	//http请求
+	@Autowired
+	private HttpClientApi httpClientApi;
 
-//	@GetMapping("feign")
-//	public String feign(){
-//		return feign.ffpt();
-//	}
+	@GetMapping("http/getCurrentUserStr")
+	public String getCurrentUserStr(String id){
+		System.out.println("http/getCurrentUserStr，参数："+id);
+		return httpClientApi.getCurrentUserStr(id);
+	}
+
+	//feign请求
+	@Autowired
+	private SpringBootApi springBootApi;
+	@GetMapping("feign/deleteByVue")
+	public Map<String,Object> deleteByVue(Long id){
+		System.out.println("feign/deleteByVue，参数："+id);
+		return ResultUtils.getSuccessResult(springBootApi.deleteUserById(id));
+	}
+
+
+	@Autowired
+	private BookService bookService;
+
+	@GetMapping("/feign/getBookInfoById")
+	public Map<String,Object> getBookInfoById(Long id){
+		return bookService.getBookInfoById(id);
+	}
 
 }

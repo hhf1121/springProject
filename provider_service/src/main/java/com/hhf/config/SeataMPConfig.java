@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import com.alibaba.druid.pool.DruidDataSource;
-
+/**
+ * seata-mybatisPlus配置数据源，支持分布式事务
+ */
 import io.seata.rm.datasource.DataSourceProxy;
 
     @Configuration
