@@ -1,7 +1,7 @@
 package com.hhf.controller;
 
 import com.hhf.api.IDubboService;
-import com.hhf.feignApi.FeignClientApi;
+//import com.hhf.feignApi.FeignClientApi;
 import com.hhf.service.impl.SentinelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,12 +52,12 @@ public class testController {
 
 
 	//feign调用http
-	@Autowired
-	private FeignClientApi feign;
+//	@Autowired
+//	private FeignClientApi feign;
 
-	@GetMapping("feign")
-	public String feign(){
-		return feign.ffpt();
-	}
+//	@GetMapping("feign")
+//	public String feign(){
+//		return feign.ffpt();
+//	}
 
 }
