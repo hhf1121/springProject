@@ -2,6 +2,7 @@ package com.hhf.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hhf.entity.Book;
 import com.hhf.feignApi.SpringBootApi;
 import com.hhf.mapper.BookMapper;
@@ -21,7 +22,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 @Service
-public class BookService implements InitializingBean {
+public class BookService extends ServiceImpl<BookMapper,Book> implements InitializingBean {
 
     @Autowired
     private BookMapper bookMapper;
