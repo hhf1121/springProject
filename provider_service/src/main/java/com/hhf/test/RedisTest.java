@@ -39,7 +39,6 @@ public class RedisTest {
         }
     }
 
-
     @Test
     public void add(){
         for (int i = 0; i < 5; i++) {
@@ -80,7 +79,6 @@ public class RedisTest {
         System.out.println(ss);
     }
 
-
     @Test
     public void addAll(){
         List<String> s=Lists.newArrayList();
@@ -89,13 +87,9 @@ public class RedisTest {
         s.add("f");
         s.add("g");
        stringRedisTemplate.opsForList().leftPushAll("userAll",s);
+        stringRedisTemplate.afterPropertiesSet();
     }
 
-
-    @Test
-    public void TEST(){
-
-    }
 
 
 }

@@ -11,6 +11,7 @@ import com.hhf.utils.ResultUtils;
 import com.sun.corba.se.spi.activation.Server;
 import io.seata.spring.annotation.GlobalTransactional;
 import jdk.nashorn.internal.codegen.ObjectCreator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 @Service
+@Slf4j
 public class BookService extends ServiceImpl<BookMapper,Book> implements InitializingBean {
 
     @Autowired
@@ -32,12 +34,12 @@ public class BookService extends ServiceImpl<BookMapper,Book> implements Initial
 
     @PostConstruct
     public void init(){
-        System.out.println("PostConstruct方法执行...");
+        log.info("PostConstruct方法执行...");
         ServiceLoader<MySPI> load = ServiceLoader.load(MySPI.class);
         Iterator<MySPI> iterator = load.iterator();
         while(iterator.hasNext()){
             MySPI next = iterator.next();
-            System.out.println(next.toSay());
+            log.info(next.toSay());
         }
     }
 
@@ -49,7 +51,7 @@ public class BookService extends ServiceImpl<BookMapper,Book> implements Initial
         }
         //1.操作user
         Map<String, Object> map = springBootApi.deleteUserById(id);
-        System.out.println("user删除的条数："+map.get("data"));
+        log.info("user删除的条数："+map.get("data"));
         //2.操作book
         QueryWrapper<Book> queryWrapper=new QueryWrapper<Book>();
         UpdateWrapper<Book> updateWrapper=new UpdateWrapper<Book>();
@@ -66,7 +68,7 @@ public class BookService extends ServiceImpl<BookMapper,Book> implements Initial
 
 
     public Map<String, Object> getBookInfoById(Long id){
-        System.out.println("入参："+id);
+        log.info("入参："+id);
         QueryWrapper<Book> wrapper=new QueryWrapper<>();
         wrapper.eq("id",id);
         Book b=bookMapper.selectById(id);
@@ -75,7 +77,7 @@ public class BookService extends ServiceImpl<BookMapper,Book> implements Initial
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("afterPropertiesSet方法执行...");
+        log.info("afterPropertiesSet方法执行...");
         ServiceLoader<MySPI> load = ServiceLoader.load(MySPI.class);
         Iterator<MySPI> iterator = load.iterator();
         while(iterator.hasNext()){

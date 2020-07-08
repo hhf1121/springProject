@@ -8,6 +8,7 @@ import com.hhf.feignApi.SpringBootApi;
 import com.hhf.service.impl.BookService;
 import com.hhf.service.impl.SentinelService;
 import com.hhf.utils.ResultUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@Slf4j
 public class testController {
 
 	@Autowired
@@ -32,13 +34,12 @@ public class testController {
 
 	@GetMapping("getDate")
 	public Map<String, Object> getDatw(Integer yes){
-		System.out.println("调用...");
 		return iDubboService.getRPCData(yes);
 	}
 
 	@GetMapping("getDateBySentinel")
 	public Map<String, Object> getDateBySentinel(Integer yes){
-		System.out.println("被调用getDateBySentinel...》》》》》》》》");
+		log.info("被调用getDateBySentinel...》》》》》》》》");
 		Map<String,Object> map=new HashMap<>();
 		map.put("success",true);
 		map.put("data",yes);
@@ -62,7 +63,7 @@ public class testController {
 
 	@GetMapping("http/getCurrentUserStr")
 	public String getCurrentUserStr(String id){
-		System.out.println("http/getCurrentUserStr，参数："+id);
+		log.info("http/getCurrentUserStr，参数："+id);
 		return httpClientApi.getCurrentUserStr(id);
 	}
 
@@ -71,7 +72,7 @@ public class testController {
 	private SpringBootApi springBootApi;
 	@GetMapping("feign/deleteByVue")
 	public Map<String,Object> deleteByVue(Long id){
-		System.out.println("feign/deleteByVue，参数："+id);
+		log.info("feign/deleteByVue，参数："+id);
 		return ResultUtils.getSuccessResult(springBootApi.deleteUserById(id));
 	}
 
