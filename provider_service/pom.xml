@@ -56,7 +56,24 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
-
+    <!--Begin Elastic Job -->
+    <!-- ElasticJobAutoConfiguration自动配置类作用-->
+   <!-- <dependency>
+        <groupId>com.github.kuhn-he</groupId>
+        <artifactId>elastic-job-lite-spring-boot-starter</artifactId>
+        <version>2.1.5</version>
+    </dependency>
+    &lt;!&ndash;解决Curator的版本冲突&ndash;&gt;
+    <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-recipes</artifactId>
+        <version>2.10.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.curator</groupId>
+        <artifactId>curator-framework</artifactId>
+        <version>2.10.0</version>
+    </dependency>-->
 </dependencies>
 
 </project>
