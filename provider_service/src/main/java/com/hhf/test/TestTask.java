@@ -13,7 +13,7 @@ import java.util.List;
  * 简单任务
  */
 
-@Component
+//@Component
 @Slf4j
 public class TestTask implements SimpleJob {
 
