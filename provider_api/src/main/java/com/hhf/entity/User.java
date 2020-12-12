@@ -19,8 +19,14 @@ public class User implements Serializable{
 	private int yes;//权限、默认0。
 	private Timestamp createDate;
 	private String picPath;//头像路径
-	
-	
+
+	public User(){}
+
+	public User(long id,String name){
+		this.id=id;
+		this.name=name;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", passWord=" + passWord + ", name=" + name + ", address="
