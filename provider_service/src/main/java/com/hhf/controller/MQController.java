@@ -35,4 +35,35 @@ public class MQController {
         return ResultUtils.getSuccessResult("发送成功");
     }
 
+    /**
+     * 发送顺序消息，以userId为顺序消费的键
+     * @param topic
+     * @return
+     */
+    @GetMapping("/sendMessageInSort")
+    public Map<String,Object> sendMessageInSort(String topic){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 5; j++) {
+                User user=new User(i,"名字"+j);
+                springProducer.sendMessageInSort(topic,user);
+            }
+        }
+        return ResultUtils.getSuccessResult("发送成功");
+    }
+
+
+    /**
+     * 发送顺序消息，以userId为顺序消费的键
+     * @param topic
+     * @return
+     */
+    @GetMapping("/sendMessageInTransaction")
+    public Map<String,Object> sendMessageInTransaction(String topic,String name,String password){
+        User user=new User();
+        user.setName(name);
+        user.setPassWord(password);
+        springProducer.sendMessageInTransaction(topic,user);
+        return ResultUtils.getSuccessResult("发送成功");
+    }
+
 }

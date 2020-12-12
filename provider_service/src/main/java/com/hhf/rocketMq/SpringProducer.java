@@ -1,6 +1,8 @@
 package com.hhf.rocketMq;
 
+import com.hhf.entity.User;
 import org.apache.rocketmq.client.exception.MQClientException;
+import org.apache.rocketmq.client.producer.SendCallback;
 import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.spring.annotation.RocketMQTransactionListener;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
@@ -23,19 +25,44 @@ public class SpringProducer {
     @Autowired
     private RocketMQTemplate rocketMQTemplate; //发送普通消息的示例
 
-    //普通消息
+    //普通消息发送示例
     public void sendMessage(String topic, Object msg) {
-        this.rocketMQTemplate.convertAndSend(topic, msg);
+        //1.异步发送
+        this.rocketMQTemplate.asyncSend(topic, msg, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                System.out.println("发送成功");
+            }
+
+            @Override
+            public void onException(Throwable e) {
+                System.out.println("发送失败");
+            }
+        });
+        //2.同步发送
+        SendResult sendResult = this.rocketMQTemplate.syncSend(topic, msg);
+        if(sendResult.getSendStatus().name().equals("SEND_OK")){
+            System.out.println("发送成功！");
+        }
+        //3.单向发送
+        this.rocketMQTemplate.sendOneWay(topic,msg);
     }
 
     //发送事务消息的示例
-    public void sendMessageInTransaction(String topic, String msg) throws InterruptedException {
+    public void sendMessageInTransaction(String topic, User msg){//testTransactionrTopic
         String[] tags = new String[]{"TagA", "TagB", "TagC", "TagD", "TagE"};
         for (int i = 0; i < 10; i++) {
-            Message<String> message = MessageBuilder.withPayload(msg).build();
+            Message<User> message = MessageBuilder.withPayload(msg).build();
             String destination = topic + ":" + tags[i % tags.length];
             SendResult sendResult = rocketMQTemplate.sendMessageInTransaction(destination, message, destination);
-
+            if(sendResult.getSendStatus().name().equals("SEND_OK")){
+                System.out.println("发送成功");
+            }
         }
+    }
+
+    //发送顺序消息的示例
+    public void sendMessageInSort(String topic,User user){
+        rocketMQTemplate.syncSendOrderly(topic, user, String.valueOf(user.getId()));
     }
 }
