@@ -49,7 +49,7 @@ public class SpringProducer {
     }
 
     //发送事务消息的示例
-    public void sendMessageInTransaction(String topic, User msg){//testTransactionrTopic
+    public void sendMessageInTransaction(String topic, User msg){//testTransactionTopic
         String[] tags = new String[]{"TagA", "TagB", "TagC", "TagD", "TagE"};
         for (int i = 0; i < 10; i++) {
             Message<User> message = MessageBuilder.withPayload(msg).build();
