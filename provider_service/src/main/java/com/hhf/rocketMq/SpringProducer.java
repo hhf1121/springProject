@@ -22,7 +22,7 @@ import java.io.UnsupportedEncodingException;
 @Component
 public class SpringProducer {
 
-    @Autowired
+    @Autowired(required = false)
     private RocketMQTemplate rocketMQTemplate; //发送普通消息的示例
 
     //普通消息发送示例

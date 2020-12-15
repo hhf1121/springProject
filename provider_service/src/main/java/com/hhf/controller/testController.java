@@ -10,6 +10,7 @@ import com.hhf.service.impl.SentinelService;
 import com.hhf.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -84,5 +85,20 @@ public class testController {
 	public Map<String,Object> getBookInfoById(Long id){
 		return bookService.getBookInfoById(id);
 	}
+
+
+	@Autowired
+	private StringRedisTemplate redisTemplate;
+
+	@GetMapping("/sendMsgByRedis")
+	public Map<String,Object> sendMsgByRedis(String msg){
+		Long redisQueue = redisTemplate.opsForList().leftPush("redisQueue", msg);
+		if(redisQueue>0){
+			return ResultUtils.getSuccessResult("发送成功");
+		}
+		return ResultUtils.getFailResult("发送失败");
+
+	}
+
 
 }
