@@ -69,6 +69,7 @@ public class SpringProducer {
 
     //发送延时消息的示例
     public void sendMessageInTime(String topic,User user,Integer delayLevel){
+        //messageDelayLevel	1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
         //String destination, Message<?> message, long timeout, int delayLevel
         rocketMQTemplate.syncSend(topic, MessageBuilder.withPayload(user).build(), 2000,delayLevel);
         System.out.println("sendTime:"+ LocalTime.now());
