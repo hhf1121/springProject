@@ -53,7 +53,7 @@ public class MQController {
 
 
     /**
-     * 发送顺序消息，以userId为顺序消费的键
+     * 发送事务消息
      * @param topic
      * @return
      */
@@ -63,6 +63,20 @@ public class MQController {
         user.setName(name);
         user.setPassWord(password);
         springProducer.sendMessageInTransaction(topic,user);
+        return ResultUtils.getSuccessResult("发送成功");
+    }
+
+    /**
+     * 发送延时消息
+     * @param topic
+     * @return
+     */
+    @GetMapping("/sendMessageInTime")
+    public Map<String,Object> sendMessageInTime(String topic,String name,String password,Integer delayLevel){
+        User user=new User();
+        user.setName(name);
+        user.setPassWord(password);
+        springProducer.sendMessageInTime(topic,user,delayLevel);
         return ResultUtils.getSuccessResult("发送成功");
     }
 

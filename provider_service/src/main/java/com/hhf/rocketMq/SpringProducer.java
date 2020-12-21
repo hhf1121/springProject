@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalTime;
 
 /*** @author ：楼兰 *
  * @date ：Created in 2020/10/22 *
@@ -64,5 +65,12 @@ public class SpringProducer {
     //发送顺序消息的示例
     public void sendMessageInSort(String topic,User user){
         rocketMQTemplate.syncSendOrderly(topic, user, String.valueOf(user.getId()));
+    }
+
+    //发送延时消息的示例
+    public void sendMessageInTime(String topic,User user,Integer delayLevel){
+        //String destination, Message<?> message, long timeout, int delayLevel
+        rocketMQTemplate.syncSend(topic, MessageBuilder.withPayload(user).build(), 2000,delayLevel);
+        System.out.println("sendTime:"+ LocalTime.now());
     }
 }
