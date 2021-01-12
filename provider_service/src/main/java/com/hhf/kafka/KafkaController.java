@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @RequestMapping("kafka")
 public class KafkaController {
-    @Autowired
+//    @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @RequestMapping("/send")
