@@ -1,0 +1,25 @@
+server:
+  port: 9081
+spring:
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3307/books?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
+#    username: root
+#    password: feixiang
+  application:
+    name: elastic-job-app
+  redis:
+    host: localhost
+    port: 6379
+    password: redis
+  profiles:
+    active: database_standard
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+logging:
+  level:
+    com.hhf.mapper: debug
+

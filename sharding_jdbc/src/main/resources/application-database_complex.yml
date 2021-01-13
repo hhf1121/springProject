@@ -1,0 +1,41 @@
+spring:
+  # 分库
+  shardingsphere:
+    datasource:
+      names: sharding1,sharding2
+      sharding1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3307/sharding1?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
+        username: root
+        password: feixiang
+      sharding2:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3307/sharding2?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
+        username: root
+        password: feixiang
+    sharding:
+      tables:
+        user:
+          actual-data-nodes: sharding$->{1..2}.user_$->{1..2}
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+            props:
+              worker:
+                id: 1
+          table-strategy:
+            #complex策略，自定义实现类，支持多个分片键
+            complex:
+              sharding-columns: id,yes
+              algorithm-class-name: hhf.my.sharding.MyTableShardingComplexConfig
+          database-strategy:
+            complex:
+              sharding-columns: id,yes
+              algorithm-class-name: hhf.my.sharding.MyDBShardingComplexConfig
+    props:
+      sql:
+        show: true
+  main:
+    allow-bean-definition-overriding: true
