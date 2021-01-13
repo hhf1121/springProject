@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="spring-dubbo-client"></dubbo:application>
+
+    <!--注册中心-->
+    <dubbo:registry address="multicast://224.1.2.3:11111"></dubbo:registry>
+
+    <!-- consumer,配置接口公共的属性  group="" check="" timeout="" retries=""   -->
+    <dubbo:consumer  group="hhf-provider" ></dubbo:consumer>
+    <!-- loadbalance /timeout 等-->
+    <dubbo:reference  id="myService" interface="com.hhf.dubbo.service.IMyService"></dubbo:reference>
+
+
+</beans>

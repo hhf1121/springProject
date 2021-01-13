@@ -1,7 +1,9 @@
 package com.hhf.dubbo.service;
 
+import com.hhf.dubbo.pojo.User;
+
 public interface IMyService {
 
-    String getData(String info);
+    User getData(String info);
 
 }

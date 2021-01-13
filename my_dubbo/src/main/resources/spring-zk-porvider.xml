@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 应用名称 -->
+    <dubbo:application name="spring-dubbo-server"></dubbo:application>
+
+    <!-- dubbo协议 -->
+    <dubbo:protocol port="-1" name="dubbo"></dubbo:protocol>
+
+    <!--注册中心-->
+    <dubbo:registry  address="zookeeper://127.0.0.1:2181" register="true"></dubbo:registry>
+    <!-- 可通过分组、联调接口 -->
+    <dubbo:provider  retries="2" timeout="1000" group="zk-provider"  ></dubbo:provider>
+
+    <!-- 接口 -->
+    <dubbo:service interface="com.hhf.dubbo.service.IMyService" ref="myService"></dubbo:service>
+    <!-- provider、配置一些registry/service公共的值()  retries="2" timeout="1000" group="hhf-provider" protocol="dubbo" -->
+
+    <bean id="myService" class="com.hhf.dubbo.service.MyService">
+        <!--<property name="port" value="java.lang.Math.random()*100"></property>-->
+        <property name="isUser" ref="user"></property>
+    </bean>
+
+
+    <bean id="user" class="com.hhf.dubbo.pojo.User">
+        <property name="name" value="名字"></property>
+        <property name="age" value="1"></property>
+        <property name="address" value="地址"></property>
+    </bean>
+
+</beans>

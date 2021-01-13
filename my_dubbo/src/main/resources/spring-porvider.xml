@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 应用名称 -->
+    <dubbo:application name="spring-dubbo-server"></dubbo:application>
+
+    <!-- dubbo协议 -->
+    <dubbo:protocol port="-1" name="dubbo"></dubbo:protocol>
+
+    <!--注册中心-->
+    <!-- 如果配置了group，那么服务端的group要和调用端的group一致，否则调用不到
+    register="false"  不注册到注册中心，本地不往开发环境注册
+    -->
+    <dubbo:registry protocol="multicast" address="224.1.2.3:11111" register="false"></dubbo:registry>
+
+    <!-- 接口 -->
+    <dubbo:service interface="com.hhf.dubbo.service.IMyService" ref="myService"></dubbo:service>
+    <!-- provider、配置一些registry/service公共的值()  retries="2" timeout="1000" group="hhf-provider" protocol="dubbo" -->
+
+    <dubbo:provider  retries="2" timeout="1000" group="hhf-provider"  ></dubbo:provider>
+
+    <bean id="myService" class="com.hhf.dubbo.service.MyService">
+        <property name="port" value="java.lang.Math.random()*100"></property>
+    </bean>
+
+</beans>
