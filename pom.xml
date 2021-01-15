@@ -16,8 +16,8 @@
   <modules>
     <module>provider_api</module>
     <module>provider_service</module>
-    <module>my_dubbo</module>
     <module>sharding_jdbc</module>
+    <module>spring_dubbo</module>
   </modules>
   <name>springProject Maven Webapp</name>
   <!-- FIXME change it to the project's website -->

@@ -17,7 +17,7 @@
 
     <!-- 接口 -->
     <dubbo:service interface="com.hhf.dubbo.service.IMyService" ref="myService"></dubbo:service>
-    <!-- provider、配置一些registry/service公共的值()  retries="2" timeout="1000" group="hhf-provider" protocol="dubbo" -->
+    <!-- provider、配置一些registry/service公共的值()  retries="2" timeout="1000" group="hhf-provider" protocol="com.hhf.dubbo" -->
 
     <dubbo:provider  retries="2" timeout="1000" group="hhf-provider"  ></dubbo:provider>
 

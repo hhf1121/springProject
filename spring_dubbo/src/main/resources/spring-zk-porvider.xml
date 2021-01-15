@@ -16,7 +16,7 @@
 
     <!-- 接口 -->
     <dubbo:service interface="com.hhf.dubbo.service.IMyService" ref="myService"></dubbo:service>
-    <!-- provider、配置一些registry/service公共的值()  retries="2" timeout="1000" group="hhf-provider" protocol="dubbo" -->
+    <!-- provider、配置一些registry/service公共的值()  retries="2" timeout="1000" group="hhf-provider" protocol="com.hhf.dubbo" -->
 
     <bean id="myService" class="com.hhf.dubbo.service.MyService">
         <!--<property name="port" value="java.lang.Math.random()*100"></property>-->

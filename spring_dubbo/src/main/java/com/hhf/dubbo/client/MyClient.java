@@ -1,6 +1,5 @@
 package com.hhf.dubbo.client;
 
-import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
@@ -8,7 +7,6 @@ import com.hhf.dubbo.pojo.User;
 import com.hhf.dubbo.service.IMyService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class MyClient {
 
@@ -18,7 +16,7 @@ public class MyClient {
         // 设置服务接口
         referenceConfig.setInterface(IMyService.class);
         // 设置URL
-//        referenceConfig.setUrl("dubbo://192.168.202.1:20880/com.hhf.dubbo.service.IMyService");
+//        referenceConfig.setUrl("com.hhf.dubbo://192.168.202.1:20880/com.hhf.com.hhf.dubbo.service.IMyService");
         //使用multicast模式的时候，需要关掉vm虚拟机的虚拟网卡，否则调不到...
         referenceConfig.setRegistry(new RegistryConfig("multicast://224.1.2.3:11111"));
         //轮询

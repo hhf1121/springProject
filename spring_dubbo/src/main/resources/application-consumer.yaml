@@ -1,0 +1,11 @@
+server:
+  port: 8182
+## Dubbo:consumer
+spring:
+  dubbo:
+    application:
+      name: myconsumer
+    registry:
+      address: zookeeper://127.0.0.1:2181
+    # 扫描@Reference所在的包
+    scan: com.hhf.dubbo.annotation.apiservice,com.hhf.api
