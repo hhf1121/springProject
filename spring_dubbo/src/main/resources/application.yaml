@@ -5,4 +5,4 @@ spring:
     username: root
     password: feixiang
   profiles:
-    active: consumer
+    active: provider
