@@ -5,4 +5,5 @@ spring:
     username: root
     password: feixiang
   profiles:
-    active: provider
+    # 一个应用模拟provider和consumer，先启动provider、调用consumer的应用
+    active: consumer
