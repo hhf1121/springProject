@@ -20,7 +20,7 @@ public class MyServer {
         // 设置服务接口
         serviceConfig.setInterface(IMyService.class);
         // 设置开放的协议(-1,不指定端口。20880<=)
-        serviceConfig.setProtocol(new ProtocolConfig("com/hhf/dubbo",-1));
+        serviceConfig.setProtocol(new ProtocolConfig("dubbo",-1));
         // 设置一个空的注册中心
 //        serviceConfig.setRegistry(new RegistryConfig(RegistryConfig.NO_AVAILABLE));
         serviceConfig.setRegistry(new RegistryConfig("multicast://224.1.2.3:11111"));

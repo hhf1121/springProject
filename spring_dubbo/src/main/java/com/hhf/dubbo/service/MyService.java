@@ -29,7 +29,11 @@ public class MyService implements IMyService{
     @Override
     public User getData(String info) {
         System.out.println(info+"rpc调用>>>>>"+isUser);
-        isUser.setName(info);
+        if(isUser!=null){
+            isUser.setName(info);
+        }else {
+            isUser=new User();
+        }
         return isUser;
     }
 }
