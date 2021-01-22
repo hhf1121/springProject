@@ -9,6 +9,8 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 public class MySever {
 
@@ -24,6 +26,8 @@ public class MySever {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
+//                            pipeline.addLast(new StringDecoder());
+//                            pipeline.addLast(new StringEncoder());
                             pipeline.addLast(new ServerHandler());
                         }
                     });
