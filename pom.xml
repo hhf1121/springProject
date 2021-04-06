@@ -18,6 +18,7 @@
     <module>provider_service</module>
     <module>sharding_jdbc</module>
     <module>spring_dubbo</module>
+    <module>spring_xxl_job</module>
   </modules>
   <name>springProject Maven Webapp</name>
   <!-- FIXME change it to the project's website -->

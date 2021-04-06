@@ -1,0 +1,19 @@
+spring-boot集成xxl-job
+1.引入jar
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+2.配置文件
+application.yaml
+3.配置类
+@Configuration
+XxlJobConfig
+4.自定义task
+    @XxlJob("myTask")
+    public ReturnT<String> myTask(String param){
+       log.info("myTask:start..."+param);
+        return SUCCESS;
+    }
+5.启动SpringXxljobApplication
