@@ -18,8 +18,8 @@ public class MyConsumer {
     @StreamListener(MyInputInterface.MY_MESSAGE_INPUT)
     public void getMsg(@Payload Message<User> message){
         User dto = message.getPayload();
-        log.info(dto.toString());
-        log.info("开始消费my-spring-cloud-stream-rabbitmq消息:{}", dto);
+        log.info("开始消费my-spring-cloud-stream-rabbitmq消息...");
+        log.info(dto.getName()+"-"+dto.getAge());
     }
 
 }
