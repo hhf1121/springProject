@@ -2,10 +2,14 @@ server:
   port: 8011
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3307/books?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
-    username: root
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    initial-size: 5
+    max-idle: 10
+    max-wait: 10000
+    min-idle: 5
     password: feixiang
+    url: jdbc:oracle:thin:@127.0.0.1:1521/orcl
+    username: scott
 xxl:
   job:
     admin:
@@ -15,6 +19,12 @@ xxl:
       appname: spring-xxl-job
       addresses:
       ip:
-      port: 9999
+      port: 9999  #调度时的端口
       logpath: /data/applogs/xxl-job/jobhandler
       logretentiondays: 30
+logging:
+  level:
+    com:
+      hhf:
+        oracle:
+          mapper: debug
