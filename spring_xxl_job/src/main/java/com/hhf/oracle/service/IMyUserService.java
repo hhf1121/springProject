@@ -10,4 +10,7 @@ public interface IMyUserService extends IService<MyUser> {
     IPage<MyUser> queryData(MyUser myUser);
 
     int saveData(MyUser myUser);
+
+    int callMyProcedure(Integer num);
+
 }

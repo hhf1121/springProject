@@ -1,8 +1,6 @@
 package com.hhf.oracle.entity;
 
-import com.baomidou.mybatisplus.annotation.KeySequence;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class MyUser {
 
+//    @TableId(value = "ID", type = IdType.INPUT)
     private Long id;
     private String name;
     private Double money;

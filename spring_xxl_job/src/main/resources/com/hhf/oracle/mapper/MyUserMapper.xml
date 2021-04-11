@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhf.oracle.mapper.MyUserMapper" >
+    <resultMap id="baseMap" type="com.hhf.oracle.entity.MyUser">
+        <id property="ID" column="id"></id>
+        <result property="NAME" column="name"></result>
+        <result property="MONEY" column="money"></result>
+        <result property="BIRTH" column="birth"></result>
+    </resultMap>
+    <select id="callMyProcedure" statementType="CALLABLE" parameterType="java.lang.Integer">
+        call insert_user_data_init(#{_param})
+    </select>
+
+    <select id="seqNext" resultType="java.lang.Integer">
+        SELECT MY_SEQ.NEXTVAL FROM DUAL
+    </select>
+
+
+
+
+<!--存储过程，新增数据-->
+  <!--
+  create or replace procedure insert_user_data_init(num number) is    &#45;&#45;存储过程，名称为insert_user_data_init
+    param_num int;   &#45;&#45;声明变量
+    init_num int;
+    temp_num int;
+    begin
+    param_num := num;
+    init_num :=MY_SEQ.NEXTVAL;
+    temp_num := init_num;
+    while init_num <= param_num+temp_num &#45;&#45;设置插入的次数
+    loop
+    insert into my_oracle_user values(init_num,'name'||init_num,1.1+init_num,sysdate+init_num);
+    &#45;&#45; select my_seq.nextval from dual;
+    init_num := init_num + 1;   &#45;&#45;循环时每次加一
+    end loop;
+    commit;
+    end;-->
+    <!--创建序列-->
+    <!--CREATE SEQUENCE MY_SEQ INCREMENT BY 1 START WITH 1 ;-->
+
+    <!--java.sql.SQLSyntaxErrorException: ORA-00911: 无效字符
+    原因很简单，配置文件中SQL语句结束的;号去掉-->
+</mapper>

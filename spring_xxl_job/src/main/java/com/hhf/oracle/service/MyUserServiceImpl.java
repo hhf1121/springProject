@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -43,4 +45,23 @@ public class MyUserServiceImpl extends ServiceImpl< MyUserMapper,MyUser> impleme
         log.info("新增数据的id:"+myUser.getId());
         return insert;
     }
+
+    @Override
+    public int callMyProcedure(Integer num) {
+        int i=1;
+        LocalDateTime now = LocalDateTime.now();
+        log.info("存储过程...START");
+        try{
+            myUserMapper.callMyProcedure(num);
+        for (int j = 0; j < num; j++) {
+            myUserMapper.seqNext(j);
+        }
+        log.info("存储过程...END,花费时间："+ Duration.between(now,LocalDateTime.now()));
+        return i;
+        }catch (Exception w){
+            log.error(w.getMessage());
+            return -1;
+        }
+    }
+
 }

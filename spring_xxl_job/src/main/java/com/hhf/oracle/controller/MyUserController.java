@@ -34,7 +34,12 @@ public class MyUserController {
         return ResultUtils.getSuccessResult(myUserService.saveData(myUser));
     }
 
-    
+    @RequestMapping(value = "callProcedure",method = RequestMethod.GET)
+    public Map<String,Object> callMyProcedureInsertData(Integer num){
+        return ResultUtils.getSuccessResult(myUserService.callMyProcedure(num));
+    }
+
+
 
 
 }
