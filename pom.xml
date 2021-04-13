@@ -119,6 +119,25 @@
       <artifactId>mybatis-plus-boot-starter</artifactId>
       <version>3.3.0</version>
     </dependency>
+    <!--        代码生成-->
+    <!-- velocity 模板引擎, 默认 -->
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-engine-core</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <!-- freemarker 模板引擎 -->
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.28</version>
+    </dependency>
+    <!--阿里druid数据库链接依赖-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.12</version>
+    </dependency>
 
   </dependencies>
 
