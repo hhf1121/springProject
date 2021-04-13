@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface MyOutputInterface {
 
-    final String MY_MESSAGE_OUTPUT = "my_message_input1";
+    final String MY_MESSAGE_OUTPUT = "my_message_out";
 
     @Output(MY_MESSAGE_OUTPUT)
     MessageChannel sendMsg();
