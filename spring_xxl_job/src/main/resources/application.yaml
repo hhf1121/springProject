@@ -25,6 +25,4 @@ xxl:
 logging:
   level:
     com:
-      hhf:
-        oracle:
-          mapper: debug
+      hhf: debug
