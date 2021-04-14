@@ -17,3 +17,7 @@ XxlJobConfig
         return SUCCESS;
     }
 5.启动SpringXxljobApplication
+
+
+
+springboot集成oracle，使用mybatis-plus 生成代码。

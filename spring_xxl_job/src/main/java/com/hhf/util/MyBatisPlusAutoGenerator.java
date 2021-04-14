@@ -1,4 +1,4 @@
-package com.hhf.oracle.util;
+package com.hhf.util;
 
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -13,13 +13,14 @@ import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import lombok.extern.slf4j.Slf4j;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MyBatisAutoGenerator {
+@Slf4j
+public class MyBatisPlusAutoGenerator {
 
 
     public static void main(String[] args) {
@@ -66,8 +67,11 @@ public class MyBatisAutoGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
-                return projectPath + "/src/main/resources/mapper/"
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                String xml=projectPath + "/src/main/resources/" +pc.getParent().replace(".","/")+
+                        "/mapper/"
+                        + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                log.info(xml);
+                return xml;
             }
         });
         cfg.setFileOutConfigList(focList);
