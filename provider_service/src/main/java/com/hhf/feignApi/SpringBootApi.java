@@ -11,10 +11,13 @@ import java.util.Map;
  * 请求微服务api，用微服务名称调用
  */
 
-@FeignClient(value = "hhf-springboot",url = "http://localhost:8081/",fallback = SpringBootApiFallBack.class)
+@FeignClient(value = "hhf-springboot",url = "http://localhost:8082/",fallback = SpringBootApiFallBack.class)
 public interface SpringBootApi {
 
     @RequestLine("GET /springBoot/vue/deleteByVue?id={id}")
     public Map<String, Object> deleteUserById(@Param("id") Long id);
+
+    @RequestLine("GET /my/myIndex")
+    public Map<String, Object> myIndex();
 
 }

@@ -12,4 +12,9 @@ public class SpringBootApiFallBack implements SpringBootApi {
     public Map<String, Object> deleteUserById(Long id) {
         return ResultUtils.getFailResult("降级！");
     }
+
+    @Override
+    public Map<String, Object> myIndex() {
+        return ResultUtils.getFailResult("降级！");
+    }
 }
