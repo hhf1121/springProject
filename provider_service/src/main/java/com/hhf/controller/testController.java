@@ -28,6 +28,10 @@ public class testController {
 	@Autowired
 	private SentinelService sentinelService;
 
+	//feign请求
+	@Autowired
+	private SpringBootApi springBootApi;
+
 	@RequestMapping("test")
 	public String testIndex(){
 		return "SptringBoot_Dubbo_provider_is_start...";
@@ -68,13 +72,15 @@ public class testController {
 		return httpClientApi.getCurrentUserStr(id);
 	}
 
-	//feign请求
-	@Autowired
-	private SpringBootApi springBootApi;
 	@GetMapping("feign/deleteByVue")
 	public Map<String,Object> deleteByVue(Long id){
 		log.info("feign/deleteByVue，参数："+id);
 		return ResultUtils.getSuccessResult(springBootApi.deleteUserById(id));
+	}
+
+	@GetMapping("feign/myIndex")
+	public Map<String,Object> myIndex(){
+		return ResultUtils.getSuccessResult(springBootApi.myIndex());
 	}
 
 
