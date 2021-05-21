@@ -20,6 +20,9 @@ public class MyProvider {
 
 
     public void sendMsg(User user){
+//        延时发送setHeader
+//        Message<User> message = MessageBuilder.withPayload(user).setHeader("x-delay", 1000 * 60 * 1)
+//                .build();
         Message<User> message = MessageBuilder.withPayload(user).build();
         boolean send = myOutputInterface.sendMsg().send(message);
         if(send){

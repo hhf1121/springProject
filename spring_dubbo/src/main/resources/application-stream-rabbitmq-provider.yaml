@@ -16,6 +16,11 @@ spring:
                 port: 5672
                 username: guest
                 password: guest
+      rabbit:
+        bindings:
+          my_message_out:
+            producer:
+              delayed-exchange: true # 表示此通道(my_message_out)发送的消息是个延迟消息
       bindings: # 服务的整合处理
         my_message_out: # 这个名字是一个通道的名称
           destination: studyExchange # 表示通道my_message_out要使用的Exchange名称为studyExchange
