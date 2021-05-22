@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public interface MyInputInterface {
 
-//    final String MY_MESSAGE_INPUT = "my_message_input";
+    final String MY_MESSAGE_INPUT = "my_message_input";
 
-//    @Input(MY_MESSAGE_INPUT)
-//    SubscribableChannel reciverMsg();
+    @Input(MY_MESSAGE_INPUT)
+    SubscribableChannel reciverMsg();
 
 
 }

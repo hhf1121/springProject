@@ -5,5 +5,5 @@ spring:
     username: root
     password: feixiang
   profiles:
-    # 一个应用模拟provider和consumer，先启动provider、调用consumer的应用
-    active: stream-rabbitmq-provider
+    # 一个应用模拟provider和consumer，provider和consumer一起配置，自产自销
+    active: stream-rabbitmq
