@@ -26,7 +26,7 @@ public class MyConsumer {
         log.info("开始消费my-spring-cloud-stream-rabbitmq消息...");
         //模拟异常，消费失败，就会保持到对应的死信队列
 //        int i=1/0;
-        log.info(dto.getName()+"-"+dto.getAge());
+        log.info(dto.getName()+"-"+dto.getAge()+"-"+dto.getAddress());
     }
 
 
