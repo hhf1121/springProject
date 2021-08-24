@@ -1,0 +1,8 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: feixiang
+    url: jdbc:mysql://127.0.0.1:3307/books?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
