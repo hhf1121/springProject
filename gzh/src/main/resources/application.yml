@@ -6,3 +6,7 @@ spring:
     username: root
     password: feixiang
     url: jdbc:mysql://127.0.0.1:3307/books?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
+wx:
+  appId: wxffdeca2f994a2f33
+  appSecret: 54c128a7dc39412fd148d7fdec503d1d
+  token: mytoken
