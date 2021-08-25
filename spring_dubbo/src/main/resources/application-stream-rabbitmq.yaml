@@ -26,6 +26,8 @@ spring:
           content-type: application/json # 设置消息类型，文本则设置“text/plain”
           binder: rabbit1 # 设置要绑定的消息服务的具体设置
           group: myConsumerGroup
+          consumer:
+            max-attempts: 1
       rabbit:
         bindings:
           my_message_out:
