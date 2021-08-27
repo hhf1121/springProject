@@ -1,14 +1,18 @@
 package com.hhf.chat.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.hhf.chat.util.ResultUtils;
 import com.hhf.chat.util.SHA1;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 /**
  * 云路供应链科技有限公司 版权所有 © Copyright 2020
@@ -42,6 +47,8 @@ public class MessageController {
 
     @Autowired
     private WxMpMessageRouter messageRouter;
+
+    private String TOKEN;
 
 
     @GetMapping("/openid")
@@ -85,6 +92,10 @@ public class MessageController {
         String nonce=request.getParameter("nonce");
         String echostr=request.getParameter("echostr");
         log.info("加密入参：timestamp:{},nonce:{},signature:{},echostr:{}",timestamp,nonce,signature,echostr);
+        if(StringUtils.isEmpty(echostr)||StringUtils.isEmpty(signature)||StringUtils.isEmpty(timestamp)||StringUtils.isEmpty(nonce)){
+            log.warn("校验参数不全！");
+            return "校验参数不全";
+        }
         //这里是对三个参数进行加密
         String jiami = SHA1.getSHA1(token, timestamp, nonce,"");
         log.info("解密之后：{}",jiami);
@@ -141,6 +152,35 @@ public class MessageController {
 //        log.info("returnXml>>>>>>>>>>>>>>"+returnXml);
 //        pw.println(returnXml);
 //        return null;
+    }
+
+    /**
+     * 获取token
+     * @return
+     */
+    @GetMapping("/getToken")
+    public String getToken() throws WxErrorException {
+        TOKEN = wxMpService.getAccessToken();
+        return TOKEN;
+    }
+
+    @PostMapping("/createMenu")
+    public Map<String,Object> createMenu(@RequestBody String menuJson){
+        String s = "";
+        try {
+            s = wxMpService.getMenuService().menuCreate(menuJson);
+        } catch (WxErrorException e) {
+            log.error("创建菜单失败");
+            e.printStackTrace();
+        }finally {
+            try {
+                WxMpMenu wxMpMenu = wxMpService.getMenuService().menuGet();
+                log.info(JSON.toJSONString(wxMpMenu));
+            } catch (WxErrorException e) {
+                e.printStackTrace();
+            }
+            return ResultUtils.getSuccessResult(s);
+        }
     }
 
 }
