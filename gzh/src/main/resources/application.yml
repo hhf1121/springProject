@@ -15,3 +15,4 @@ wx:
   appId: wxffdeca2f994a2f33
   appSecret: 54c128a7dc39412fd148d7fdec503d1d
   token: mytoken
+  redirectUrl: http://sgva8d.natappfree.cc/wx/loginCallback
