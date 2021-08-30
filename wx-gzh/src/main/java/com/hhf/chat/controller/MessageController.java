@@ -1,6 +1,9 @@
 package com.hhf.chat.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hhf.chat.entity.User;
+import com.hhf.chat.service.UserService;
 import com.hhf.chat.util.ResultUtils;
 import com.hhf.chat.util.SHA1;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -29,7 +31,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -61,6 +62,9 @@ public class MessageController implements InitializingBean {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private UserService userService;
 
     @Value("${wx.msg.logintemplate}")
     private String loginTemplate;
@@ -290,8 +294,22 @@ public class MessageController implements InitializingBean {
     }
 
 
+    /**
+     *  系统登录时、给关注公众号的用户推消息(当前写死退给管理员)
+     * @param userCode
+     * @return
+     */
     @RequestMapping("/userLoginInfo")
     public Map<String,Object> userLoginInfo(String userCode){
+        log.info("入参：{}",userCode);
+        //1.根据userCode查询对应的openid
+        QueryWrapper<User> eq = new QueryWrapper<User>().eq("isDelete", 0).eq("userName", userCode);
+        User one = userService.getOne(eq);
+        if(one==null){
+            log.error("用户不存在");
+            return ResultUtils.getFailResult("用户不存在");
+        }
+        //2.根据openid查询是否订阅公众号
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String url="http://learn.hhf.com";
         //实例化模板对象
@@ -304,7 +322,7 @@ public class MessageController implements InitializingBean {
         wxMpTemplateMessage.setUrl(url);
         //构建消息格式
         List<WxMpTemplateData> listData = Arrays.asList(
-                new WxMpTemplateData("userName", "我是管理员", "#173177"),
+                new WxMpTemplateData("userName", one.getName(), "blue"),
                 new WxMpTemplateData("time", dateTimeFormatter.format(LocalDateTime.now()), "red"),
                 new WxMpTemplateData("url", url,"#173177")
         );
