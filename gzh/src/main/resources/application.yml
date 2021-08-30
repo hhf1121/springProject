@@ -7,12 +7,16 @@ spring:
     password: feixiang
     url: jdbc:mysql://127.0.0.1:3307/books?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
 wx:
-#  我的app信息
-#  appId: wx77b0a3692165f501
-#  appSecret: 87df80c182ebb5ff81950424b3356448
-#  token: mytoken
-#  测试app信息
+  #  我的app信息
+  #  appId: wx77b0a3692165f501
+  #  appSecret: 87df80c182ebb5ff81950424b3356448
+  #  token: mytoken
+  #  测试app信息
   appId: wxffdeca2f994a2f33
   appSecret: 54c128a7dc39412fd148d7fdec503d1d
   token: mytoken
-  redirectUrl: http://sgva8d.natappfree.cc/wx/loginCallback
+  redirectUrl: http://zjxzb3.natappfree.cc/wx/loginCallback
+  msg:
+    mytemplate: sY1D3jbVPaDcORmnooW5WZYN3ohtTKQav9TWb3XnI_w
+    musictemplate: dkZpqUjnX3B4Qvg1gS2h6FkJsyp-CK3eE2XKZIycfLM
+    logintemplate: fDFVjvZho5PH9kSQvxoSl29eQVGMtufTiPaaqCfuneg

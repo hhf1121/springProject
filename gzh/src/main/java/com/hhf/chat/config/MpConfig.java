@@ -1,9 +1,11 @@
 package com.hhf.chat.config;
 
+import com.hhf.chat.handler.MenuHandler;
 import com.hhf.chat.handler.SubscribeHandler;
 import com.hhf.chat.handler.MsgHandler;
 import com.hhf.chat.handler.UnsubscribeHandler;
 import lombok.AllArgsConstructor;
+import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
@@ -38,6 +40,10 @@ public class MpConfig {
 
     private final SubscribeHandler subscribeHandler;
 
+    private final MenuHandler menuHandler;
+
+
+
 
     @Bean
     public WxMpService wxMpService(){
@@ -57,6 +63,9 @@ public class MpConfig {
     @Bean
     public WxMpMessageRouter messageRouter(WxMpService wxMpService) {
         final WxMpMessageRouter newRouter = new WxMpMessageRouter(wxMpService);
+        // 自定义菜单事件
+        newRouter.rule().async(false).msgType(EVENT).event(WxConsts.EventType.CLICK).handler(this.menuHandler).end();
+
         // 关注事件
         newRouter.rule().async(false).msgType(EVENT).event(SUBSCRIBE).handler(this.subscribeHandler).end();
 

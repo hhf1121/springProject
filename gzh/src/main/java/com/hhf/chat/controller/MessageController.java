@@ -12,16 +12,27 @@ import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +46,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/wx")
-public class MessageController {
+public class MessageController implements InitializingBean {
 
 
     //微信公众号基本配置中的token
@@ -47,6 +58,12 @@ public class MessageController {
 
     @Autowired
     private WxMpMessageRouter messageRouter;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${wx.msg.logintemplate}")
+    private String loginTemplate;
 
     private String TOKEN;
 
@@ -164,6 +181,11 @@ public class MessageController {
         return TOKEN;
     }
 
+    /**
+     *  创建菜单
+     * @param menuJson
+     * @return
+     */
     @PostMapping("/createMenu")
     public Map<String,Object> createMenu(@RequestBody String menuJson){
         String s = "";
@@ -183,4 +205,128 @@ public class MessageController {
         }
     }
 
+
+    /**
+     * 设置行业
+     * @param body
+     * @return
+     */
+    @PostMapping("/setIndustry")
+    public Map<String,Object> setIndustry(@RequestBody String body) throws WxErrorException {
+        String s = "";
+        String url="https://api.weixin.qq.com/cgi-bin/template/api_set_industry?access_token="+wxMpService.getAccessToken();
+        try {
+            ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(url, body, String.class);
+        } catch (Exception e) {
+            log.error("模板消息-设置行业");
+            e.printStackTrace();
+        }finally {
+            return ResultUtils.getSuccessResult(s);
+        }
+    }
+
+
+
+    /**
+     * 获取行业
+     * @return
+     */
+    @GetMapping("/getIndustry")
+    public Map<String,Object> getIndustry() throws WxErrorException {
+        String s = "";
+        String url="https://api.weixin.qq.com/cgi-bin/template/get_industry?access_token="+wxMpService.getAccessToken();
+        try {
+            ResponseEntity<String> stringResponseEntity = restTemplate.getForEntity(url, String.class);
+            s = stringResponseEntity.toString();
+        } catch (Exception e) {
+            log.error("模板消息-获取行业");
+            e.printStackTrace();
+        }finally {
+            return ResultUtils.getSuccessResult(s);
+        }
+    }
+
+
+
+    /**
+     * 获取行业模板id
+     * @return
+     */
+    @PostMapping("/getTemplate")
+    public Map<String,Object> getTemplate(@RequestBody String body) throws WxErrorException {
+        String s = "";
+        String url="https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token="+wxMpService.getAccessToken();
+        try {
+            ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(url,body,String.class);
+            s = stringResponseEntity.toString();
+        } catch (Exception e) {
+            log.error("模板消息-获取行业");
+            e.printStackTrace();
+        }finally {
+            return ResultUtils.getSuccessResult(s);
+        }
+    }
+
+
+
+    /**
+     * 获取行业模板list
+     *
+     * @return
+     */
+    @PostMapping("/getTemplateList")
+    public Map<String,Object> getTemplateList(@RequestBody String body) throws WxErrorException {
+        String s = "";
+        String url="https://api.weixin.qq.com/cgi-bin/template/get_all_private_template?access_token="+wxMpService.getAccessToken();
+        try {
+            ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(url,body, String.class);
+            s = stringResponseEntity.toString();
+        } catch (Exception e) {
+            log.error("模板消息-获取行业");
+            e.printStackTrace();
+        }finally {
+            return ResultUtils.getSuccessResult(s);
+        }
+    }
+
+
+    @RequestMapping("/userLoginInfo")
+    public Map<String,Object> userLoginInfo(String userCode){
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String url="http://learn.hhf.com";
+        //实例化模板对象
+        WxMpTemplateMessage wxMpTemplateMessage = new WxMpTemplateMessage();
+        //设置模板ID
+        wxMpTemplateMessage.setTemplateId(loginTemplate);
+        //设置发送给哪个用户
+        // 根据userCode查询某个用户
+        wxMpTemplateMessage.setToUser("o6i0d5miNUG8yKnrJbYkra6dJqYc");
+        wxMpTemplateMessage.setUrl(url);
+        //构建消息格式
+        List<WxMpTemplateData> listData = Arrays.asList(
+                new WxMpTemplateData("userName", "我是管理员", "#173177"),
+                new WxMpTemplateData("time", dateTimeFormatter.format(LocalDateTime.now()), "red"),
+                new WxMpTemplateData("url", url,"#173177")
+        );
+        //接收发送模板消息结果,就是msgid，if(msgid! = null)即成功
+        String wxTemplateResult = null;
+        //放进模板对象。准备发送
+        wxMpTemplateMessage.setData(listData);
+        try {
+            //发送模板
+            wxTemplateResult = wxMpService.getTemplateMsgService().sendTemplateMsg(wxMpTemplateMessage);
+            log.info(JSON.toJSONString(wxTemplateResult));
+            return null;
+        } catch (WxErrorException e) {
+            log.error("发送模板消息异常：{}", e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+
+    }
 }

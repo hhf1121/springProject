@@ -10,8 +10,14 @@ import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +31,10 @@ import java.util.Map;
 @Slf4j
 @Component
 public class MsgHandler implements WxMpMessageHandler {
+
+    @Value("${wx.msg.mytemplate}")
+    private String mytemplate;
+
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMpXmlMessage, Map<String, Object> map, WxMpService wxMpService, WxSessionManager wxSessionManager) throws WxErrorException {
         log.info("用户发送消息:{}", JSON.toJSONString(wxMpXmlMessage));
@@ -52,6 +62,36 @@ public class MsgHandler implements WxMpMessageHandler {
 //        } catch (WxErrorException e) {
 //            log.warn("微信客户自动回复失败",e);
 //        }
+        if(wxMpXmlMessage.getContent().equals("模板")){
+            //实例化模板对象
+            WxMpTemplateMessage wxMpTemplateMessage = new WxMpTemplateMessage();
+            //设置模板ID
+            wxMpTemplateMessage.setTemplateId(mytemplate);
+            //设置发送给哪个用户
+            wxMpTemplateMessage.setToUser(wxMpXmlMessage.getFromUser());
+            wxMpTemplateMessage.setUrl("http://www.baidu.com");
+            //构建消息格式
+            List<WxMpTemplateData> listData = Arrays.asList(
+                    new WxMpTemplateData("title", "恭喜你支付成功！", "#173177"),
+                    new WxMpTemplateData("name", "贺.", "#173177"),
+                    new WxMpTemplateData("age", "21", "#173177"),
+                    new WxMpTemplateData("remark", "如有疑问，请联系客服电话：021-54145323", "#173177")
+            );
+            //接收发送模板消息结果,就是msgid，if(msgid! = null)即成功
+            String wxTemplateResult = null;
+            //放进模板对象。准备发送
+            wxMpTemplateMessage.setData(listData);
+            try {
+                //发送模板
+                wxTemplateResult = wxMpService.getTemplateMsgService().sendTemplateMsg(wxMpTemplateMessage);
+                log.info(JSON.toJSONString(wxTemplateResult));
+                return null;
+            } catch (WxErrorException e) {
+                log.error("发送模板消息异常：{}", e.getMessage());
+                e.printStackTrace();
+                return null;
+            }
+        }
         return xmlOutTextMessage;
     }
 }
