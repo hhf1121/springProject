@@ -50,7 +50,7 @@ public class MenuHandler extends AbstractHandler {
         }
         if(wxMpXmlMessage.getEventKey().equals("music")){
             log.info("今日歌曲");
-            List<String> musics= Lists.newArrayList("1.冬天的秘密","2.起风了","3.浪花一朵朵");
+            List<String> musics= Lists.newArrayList("1.今日歌曲1","2.今日歌曲2","3.今日歌曲3");
             musics.forEach(o-> {
                 wxMpXmlMessage.setContent(o);
                 this.sendMessage(wxMpXmlMessage, wxMpService, wxMpXmlMessage.getFromUser());
