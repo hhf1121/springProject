@@ -40,6 +40,7 @@ public abstract class AbstractHandler implements WxMpMessageHandler {
     public void sendAndLogin(WxMpXmlMessage wxMpXmlMessage, WxMpService wxMpService, String openId) {
         //生成code
         String code = wxMpService.oauth2buildAuthorizationUrl(redirectUrl, "snsapi_userinfo", "my_hhf");
+
         wxMpXmlMessage.setContent("<a href=\""+code+"\">确定登录</a>");
         wxMpXmlMessage.setUrl(code);
         WxMpKefuMessage wxMpKefuMessage = null;

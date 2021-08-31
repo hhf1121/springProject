@@ -105,9 +105,10 @@ public class LoginController {
             //调用登录接口,使用openid登录
             User user=new User();
             user.setOpenId(zh_cn.getOpenId());
-            userFeign.loginUser(user);
+            Map<String, Object> stringObjectMap = userFeign.loginUser(user);
         } catch (WxErrorException e) {
             e.printStackTrace();
+            return ResultUtils.getFailResult("登录失败！");
         }
         return ResultUtils.getSuccessResult("登录成功！");
     }
