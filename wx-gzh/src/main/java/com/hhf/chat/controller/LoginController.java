@@ -3,6 +3,8 @@ package com.hhf.chat.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.hhf.chat.entity.User;
+import com.hhf.chat.feign.UserFeign;
 import com.hhf.chat.util.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -35,6 +37,9 @@ public class LoginController {
 
     @Value("${wx.appSecret}")
     private String appSecret;
+
+    @Autowired
+    private UserFeign userFeign;
 
 
     /**
@@ -76,7 +81,7 @@ public class LoginController {
          * 2、以snsapi_userinfo为scope发起的网页授权，是用来获取用户的基本信息的。但这种授权需要用户手动同意，并且由于用户同意过，所以无须关注，就可在授权后获取该用户的基本信息。
          *
          */
-        String code = wxMpService.oauth2buildAuthorizationUrl(redirectUrl, "snsapi_base", "my_hhf");
+        String code = wxMpService.oauth2buildAuthorizationUrl(redirectUrl, "snsapi_userinfo", "my_hhf");
         log.info(code);
         return code;
     }
@@ -97,10 +102,14 @@ public class LoginController {
             log.info(JSON.toJSONString(wxMpOAuth2AccessToken));
             zh_cn = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, "zh_CN");
             log.info("用户信息：{}",JSON.toJSONString(zh_cn));
+            //调用登录接口,使用openid登录
+            User user=new User();
+            user.setOpenId(zh_cn.getOpenId());
+            userFeign.loginUser(user);
         } catch (WxErrorException e) {
             e.printStackTrace();
         }
-        return ResultUtils.getSuccessResult(zh_cn);
+        return ResultUtils.getSuccessResult("登录成功！");
     }
 
 
