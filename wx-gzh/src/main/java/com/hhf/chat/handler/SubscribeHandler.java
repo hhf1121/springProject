@@ -1,6 +1,7 @@
 package com.hhf.chat.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import com.hhf.chat.entity.User;
 import com.hhf.chat.feign.UserFeign;
@@ -33,6 +34,9 @@ public class SubscribeHandler extends AbstractHandler {
 
     @Value("${wx.msg.registtemplate}")
     public String registtemplate="终于等到你~";
+
+    @Value("${wx.projectUrl}")
+    public String projectUrl;
 
 
     @Autowired
@@ -78,17 +82,18 @@ public class SubscribeHandler extends AbstractHandler {
             user.setName(userWxInfo.getNickname());
             user.setAddress(userWxInfo.getCountry()+"-"+userWxInfo.getProvince()+"-"+userWxInfo.getCity());
             user.setUserName(userWxInfo.getSubscribeTime()+userWxInfo.getNickname().hashCode()+"");
+            user.setPicPath(userWxInfo.getHeadImgUrl());
             Map<String, Object> map = userFeign.registUser(user);
             Boolean o = Boolean.valueOf(map.get("success")+"");
             if(o){//注册了账号，发送模板消息
-                User registUser =(User) map.get("data");
+                User registUser = JSON.parseObject(JSON.toJSONString(map.get("data")),User.class) ;
                 //模板消息
                 List<WxMpTemplateData> listData = Lists.newArrayList(
-                        new WxMpTemplateData("username", registUser.getUserName()),
-                        new WxMpTemplateData("password", registUser.getPassWord()),
-                        new WxMpTemplateData("url", "http://learn.hhf.com")
+                        new WxMpTemplateData("username", registUser.getUserName(),"red"),
+                        new WxMpTemplateData("password", registUser.getPassWord(),"red"),
+                        new WxMpTemplateData("url", "http://learn.hhf.com","blue")
                 );
-                sendTemplateMsg(registtemplate,"http://learn.hhf.com",listData,wxMessage,weixinService);
+                sendTemplateMsg(registtemplate,projectUrl+"/jsp/getUserInfo?openId="+registUser.getOpenId(),listData,wxMessage,weixinService);
             }else {
                 //存在账号，直接登录
                 sendAndLogin(wxMessage,weixinService,wxMessage.getFromUser());

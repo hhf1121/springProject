@@ -8,6 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -25,5 +26,8 @@ public interface UserFeign {
 
     @RequestMapping(value = "/loginUser",method = RequestMethod.POST)
     public Map<String,Object> loginUser(@RequestBody User user);
+
+    @RequestMapping(value = "/getUserByOpenid",method = RequestMethod.GET)
+    public User getUserByOpenid(@RequestParam("openId") String openId);
 
 }

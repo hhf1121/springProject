@@ -305,9 +305,9 @@ public class MessageController implements InitializingBean {
         //1.根据userCode查询对应的openid
         QueryWrapper<User> eq = new QueryWrapper<User>().eq("isDelete", 0).eq("userName", userCode);
         User one = userService.getOne(eq);
-        if(one==null){
-            log.error("用户不存在");
-            return ResultUtils.getFailResult("用户不存在");
+        if(one==null||StringUtils.isEmpty(one.getOpenId())){
+            log.error("用户不存在或没有订阅公众号");
+            return ResultUtils.getFailResult("用户不存在或没有订阅公众号");
         }
         //2.根据openid查询是否订阅公众号
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -318,7 +318,7 @@ public class MessageController implements InitializingBean {
         wxMpTemplateMessage.setTemplateId(loginTemplate);
         //设置发送给哪个用户
         // 根据userCode查询某个用户
-        wxMpTemplateMessage.setToUser("o6i0d5miNUG8yKnrJbYkra6dJqYc");
+        wxMpTemplateMessage.setToUser(one.getOpenId());
         wxMpTemplateMessage.setUrl(url);
         //构建消息格式
         List<WxMpTemplateData> listData = Arrays.asList(

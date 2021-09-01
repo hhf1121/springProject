@@ -46,6 +46,7 @@ public class User {
 
     //以此格式来接收前端传入的时间
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @TableField("createDate")
     private Date createDate;
 

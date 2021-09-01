@@ -30,4 +30,10 @@ public class UserFeignFallBack implements UserFeign {
         log.info("用户登录调用失败");
         return new JSONObject();
     }
+
+    @Override
+    public User getUserByOpenid(String openId) {
+        log.info("查询用户失败");
+        return new User();
+    }
 }

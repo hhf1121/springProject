@@ -6,6 +6,10 @@ spring:
     username: root
     password: feixiang
     url: jdbc:mysql://127.0.0.1:3307/books?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2b8
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
 wx:
   #  我的app信息
   #  appId: wx77b0a3692165f501
@@ -15,7 +19,8 @@ wx:
   appId: wxffdeca2f994a2f33
   appSecret: 54c128a7dc39412fd148d7fdec503d1d
   token: mytoken
-  redirectUrl: http://ckm63k.natappfree.cc/wx/loginCallback
+  redirectUrl: http://yenp74.natappfree.cc/wx/loginCallback
+  projectUrl: http://yenp74.natappfree.cc
   msg:
     mytemplate: sY1D3jbVPaDcORmnooW5WZYN3ohtTKQav9TWb3XnI_w
     musictemplate: dkZpqUjnX3B4Qvg1gS2h6FkJsyp-CK3eE2XKZIycfLM
