@@ -2,15 +2,19 @@ package com.hhf.chat.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.hhf.chat.dto.WxMaterialDto;
 import com.hhf.chat.entity.User;
 import com.hhf.chat.service.UserService;
 import com.hhf.chat.util.ResultUtils;
 import com.hhf.chat.util.SHA1;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
@@ -37,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 云路供应链科技有限公司 版权所有 © Copyright 2020
  *
  * @author hehongfei
  * @Description:
@@ -342,6 +345,38 @@ public class MessageController implements InitializingBean {
         }
     }
 
+
+    /**
+     * 素材文件
+     * @param wxMaterialDto
+     * @return
+     */
+    public Map<String,Object> wxMaterialPage(WxMaterialDto wxMaterialDto) {
+        WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = null;
+        try {
+            wxMpMaterialFileBatchGetResult = wxMpService.getMaterialService().materialFileBatchGet(wxMaterialDto.getType(), (wxMaterialDto.getCurrent() - 1) * wxMaterialDto.getSize(), wxMaterialDto.getSize());
+        } catch (WxErrorException e) {
+            log.info("获取微信素材列表失败", e);
+
+        }
+        return ResultUtils.getSuccessResult(wxMpMaterialFileBatchGetResult);
+    }
+
+
+    /**
+     * 图文
+     * @param wxMaterialDto
+     * @return
+     */
+    public Map<String,Object>  wxMaterialNewsPage(WxMaterialDto wxMaterialDto) {
+        WxMpMaterialNewsBatchGetResult wxMpMaterialNewsBatchGetResult = null;
+        try {
+            wxMpMaterialNewsBatchGetResult = wxMpService.getMaterialService().materialNewsBatchGet((wxMaterialDto.getCurrent() - 1) * wxMaterialDto.getSize(), wxMaterialDto.getSize());
+        } catch (WxErrorException e) {
+            log.info("获取微信素材图文列表失败", e);
+        }
+        return ResultUtils.getSuccessResult(wxMpMaterialNewsBatchGetResult);
+    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

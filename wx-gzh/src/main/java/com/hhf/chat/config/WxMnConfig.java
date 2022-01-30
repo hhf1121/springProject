@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 /**
  *
  * @author hehongfei
- * @Description: 公众号配置类
+ * @Description:    小程序配置类
  * @date 2021-08-25
  */
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "wx")
-public class WxConfig {
+@ConfigurationProperties(prefix = "mini")
+public class WxMnConfig {
 
     private String AppId;
 

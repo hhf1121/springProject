@@ -10,6 +10,8 @@ spring:
     view:
       prefix: /WEB-INF/
       suffix: .jsp
+
+#公众号
 wx:
   #  我的app信息
   #  appId: wx77b0a3692165f501
@@ -26,3 +28,9 @@ wx:
     musictemplate: dkZpqUjnX3B4Qvg1gS2h6FkJsyp-CK3eE2XKZIycfLM
     logintemplate: xbufaI9awEqCrdv-t9jxztyG8sMHLnWupgH--KhaZOA
     registtemplate: FaAQS3rLnZQB9d3GqkPj675U4dDZ3Tq3EvgIQLbR-Tc
+
+#小程序
+mini:
+  appId: wxc196967fccbf9696
+  appSecret: 1f06471191c3549d62d20ed6c29425c7
+  token: mytoken
