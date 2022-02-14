@@ -18,26 +18,26 @@ spring:
                 password: guest
       bindings: # 服务的整合处理
         my_message_out: # 这个名字是一个通道的名称
-          destination: studyExchange # 表示通道my_message_out要使用的Exchange名称为studyExchange
+          destination: study_exchange # 表示通道my_message_out要使用的Exchange名称为studyExchange
           content-type: application/json # 设置消息类型，文本则设置“text/plain”
           binder: rabbit1 # 设置要绑定的消息服务的具体设置
         my_message_input: # 这个名字是一个通道的名称,对应代码中的名称。以下的配置就是针对这个通道配置的
-          destination: studyExchange # 此通道my_message_input要使用名字是studyExchange的Exchange
+          destination: study_exchange # 此通道my_message_input要使用名字是studyExchange的Exchange
           content-type: application/json # 设置消息类型，文本则设置“text/plain”
           binder: rabbit1 # 设置要绑定的消息服务的具体设置
-          group: myConsumerGroup
+          group: my_consumer_group
           consumer:
             max-attempts: 1
       rabbit:
         bindings:
           my_message_out:
             producer:
-              delayed-exchange: true # 表示此通道(my_message_out)发送的消息是个延迟消息
-          my_message_input:   #如果消费失败，进入死信队列
-            consumer:
-              delayed-exchange: true
+              delayed-exchange: false # 表示此通道(my_message_out)发送的消息是个延迟消息
+#          my_message_input:   #如果消费失败，进入死信队列
+#            consumer:
+#              delayed-exchange: false
 #              acknowledge-mode: manual  #手动ack
-              auto-bind-dlq: true
-              republish-to-dlq: true
-              max-concurrency: 10
-              prefetch: 5
+#              auto-bind-dlq: true
+#              republish-to-dlq: true
+#              max-concurrency: 10
+#              prefetch: 5

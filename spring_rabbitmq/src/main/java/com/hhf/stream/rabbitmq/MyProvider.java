@@ -27,9 +27,9 @@ public class MyProvider {
         log.info("mq开始发消息，请求id：{}",requestId);
         StopWatch stopWatch=new StopWatch();
 //        延时发送setHeader
-        Message<User> message = MessageBuilder.withPayload(user).setHeader("x-delay", 1000 * 10 * 1)
-                .build();
-//        Message<User> message = MessageBuilder.withPayload(user).build();
+//        Message<User> message = MessageBuilder.withPayload(user).setHeader("x-delay", 1000 * 10 * 1)
+//                .build();
+        Message<User> message = MessageBuilder.withPayload(user).build();
         stopWatch.start("开始发消息");
         boolean send = myOutputInterface.sendMsg().send(message);
         stopWatch.stop();
