@@ -70,7 +70,7 @@ public class RestHighLevClientForDocumentTests extends SpringBootElasticsearchDe
      */
     @Test
     public void testCreate() throws IOException {
-        IndexRequest indexRequest = new IndexRequest("products");
+        IndexRequest indexRequest = new IndexRequest("products_s");
         indexRequest
                 //.id("2") //手动指定文档 id
                 .source("{\"title\":\"鱼豆腐\",\"price\":2.5,\"created_at\":\"2021-12-12\",\"description\":\"鱼豆腐好吃!\"}", XContentType.JSON);//指定文档数据

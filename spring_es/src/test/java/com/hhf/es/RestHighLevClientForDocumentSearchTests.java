@@ -71,7 +71,7 @@ public class RestHighLevClientForDocumentSearchTests extends SpringBootElasticse
      */
     @Test
     public void testSearch() throws IOException {
-        SearchRequest searchRequest = new SearchRequest("products");
+        SearchRequest searchRequest = new SearchRequest("products_s");
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         //创建高亮器
         HighlightBuilder highlightBuilder = new HighlightBuilder();

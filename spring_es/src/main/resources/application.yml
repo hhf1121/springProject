@@ -3,5 +3,5 @@ server:
 spring:
   application:
     name: spring-boot-es
-elasticsearch:
-  host: localhost:9200
+es:
+  hosts: localhost:9200
