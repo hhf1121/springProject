@@ -1,5 +1,4 @@
 /**
- * Copyright (C), 2015-2021, 云路供应链科技有限公司
  * FileName: SHA1
  * Author:   luhong
  * Date:     2021-03-30 16:33

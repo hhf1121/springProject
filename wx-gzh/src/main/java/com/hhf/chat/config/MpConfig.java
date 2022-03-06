@@ -20,7 +20,6 @@ import static me.chanjar.weixin.common.api.WxConsts.EventType.UNSUBSCRIBE;
 import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType.EVENT;
 
 /**
- * 云路供应链科技有限公司 版权所有 © Copyright 2020
  *
  * @author hehongfei
  * @Description:

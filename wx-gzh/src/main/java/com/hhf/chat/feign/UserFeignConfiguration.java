@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 云路供应链科技有限公司 版权所有 © Copyright 2020
  *
  * @author hehongfei
  * @Description:

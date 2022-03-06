@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 云路供应链科技有限公司 版权所有 © Copyright 2020
  *
  * @author hehongfei
  * @Description:
